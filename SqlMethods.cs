@@ -10,16 +10,18 @@ namespace SqlCore
 {
     class SqlCore
     {
-        public string ConDirectory;
+        public string ConnectionString;
         public DataTable sqlDt;
-        public SqlCore(string conDirectory)
+        public string SqlTableName;
+        public SqlMethods(string connectionString)
         {
-            ConDirectory = conDirectory;
+            ConnectionString = connectionString;
         }
 
         public void SelectData(string sqlTableName)
         {
-            SqlConnection con = new SqlConnection(ConDirectory);
+            SqlTableName = sqlTableName;
+            SqlConnection con = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand("Select * From "+sqlTableName+"", con);
             SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
             sqlDt = new DataTable();
@@ -28,15 +30,29 @@ namespace SqlCore
 
         public void AddData(string sqlCommandText)
         {
-            SqlConnection con = new SqlConnection(ConDirectory);
+            SqlConnection con = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(sqlCommandText, con);
             SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
             cmd.ExecuteNonQuery();
+            SelectData(SqlTableName);
         }
 
-        public void UpdateData()
+        public void UpdateData(string sqlCommandText)
         {
+            SqlConnection con = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(sqlCommandText, con);
+            SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
+            cmd.ExecuteNonQuery();
+            SelectData(SqlTableName);
+        }
 
+        public void DeleteData(string sqlCommandText)
+        {
+            SqlConnection con = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand(sqlCommandText, con);
+            SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
+            cmd.ExecuteNonQuery();
+            SelectData(SqlTableName);
         }
     }
 }
