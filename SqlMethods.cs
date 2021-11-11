@@ -10,13 +10,15 @@ namespace SqlCore
 {
     class SqlMethods
     {
-        public string ConnectionString;
+        string ConnectionString;
         public DataTable sqlDt;
-        public string SqlTableName;
+        string SqlTableName;
+        
         public SqlMethods(string connectionString)
         {
             ConnectionString = connectionString;
         }
+        
 
         public void SelectData(string sqlTableName)
         {
@@ -31,28 +33,29 @@ namespace SqlCore
         public void AddData(string sqlCommandText)
         {
             SqlConnection con = new SqlConnection(ConnectionString);
+            con.Open();
             SqlCommand cmd = new SqlCommand(sqlCommandText, con);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
             cmd.ExecuteNonQuery();
-            SelectData(SqlTableName);
+            con.Close();
         }
 
         public void UpdateData(string sqlCommandText)
         {
             SqlConnection con = new SqlConnection(ConnectionString);
+            con.Open();
             SqlCommand cmd = new SqlCommand(sqlCommandText, con);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
             cmd.ExecuteNonQuery();
-            SelectData(SqlTableName);
+            con.Close();
         }
 
-        public void DeleteData(string sqlCommandText)
+        public void DeleteData(string tableName,string columnName,int idNo)
         {
             SqlConnection con = new SqlConnection(ConnectionString);
+            con.Open();
+            string sqlCommandText = "Delete from " + tableName + " where " + columnName + " = " + idNo + "";
             SqlCommand cmd = new SqlCommand(sqlCommandText, con);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
             cmd.ExecuteNonQuery();
-            SelectData(SqlTableName);
+            con.Close();
         }
     }
 }
