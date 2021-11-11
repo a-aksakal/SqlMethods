@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace SqlCore
 {
-    class SqlCore
+    class SqlMethods
     {
         public string ConnectionString;
         public DataTable sqlDt;
