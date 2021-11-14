@@ -15,9 +15,6 @@ namespace HastaneRandevuSistemi.Data
         public DataTable sqlDt;
         string SqlTableName;
         SqlDataReader sqlDr;
-        public static int bolumId; //Special variale you can delete.
-        public static int hastaneId; //Special variable you can delete.
-        public static int hastaId; //Special variable you can delete.
 
         public SqlMethods(string connectionString)
         {
